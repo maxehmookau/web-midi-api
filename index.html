@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  
+</head>
+<body>
+<script type="text/javascript">
+var m = null;
+navigator.requestMIDIAccess().then( onsuccesscallback, onerrorcallback );
+
+function onsuccesscallback( access ) { 
+    m = access;
+
+    var outputs = m.outputs();
+    var o = m.outputs()[0];
+    o.send( [0x90, 60, 0x7f] );
+    o.send( [0x90, 62, 0x7f], window.performance.now() + 500.0 );
+    o.send( [0x90, 64, 0x7f], window.performance.now() + 1000.0 );
+    o.send( [0x90, 65, 0x7f], window.performance.now() + 1500.0 );
+};
+
+function onerrorcallback( err ) {
+    console.log("uh-oh! Something went wrong!  Error code: " + err.code );
+}
+</script>
+</body>
+</html>
